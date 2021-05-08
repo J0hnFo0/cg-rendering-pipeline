@@ -19,15 +19,14 @@ define(["exports", "scenegraph", "animation"], function ( //
    *
    */
   function init() {
-    var insideOutPolyNode = scenegraph.createNodeWithModel(
-      "insideOutPoly",
-      "insideOutPoly"
-    );
     //	var cubeNode = scenegraph.createNodeWithModel("cube", "cube", {scale:300});
-    //cubeNode.rotateTo([1.6, -3.87, 0]);
+    //	cubeNode.rotateTo([1.6, -3.87, 0]);
 
     // BEGIN exercise myModel
-
+    var myModelNode = scenegraph.createNodeWithModel("myModel", "myModel", {
+      scale: 200,
+    });
+    //myModelNode.rotateTo([1.6, -3.87, 0]);
     // END exercise myModel
 
     return;
@@ -64,6 +63,11 @@ define(["exports", "scenegraph", "animation"], function ( //
       "cube Escher texture",
       "cube",
       { scale: 200, textureURL: "EscherCubeFish.gif", sixFacesTexture: true }
+    );
+
+    var insideOutPolyNode = scenegraph.createNodeWithModel(
+      "insideOutPoly",
+      "insideOutPoly"
     );
 
     var diamondNode = scenegraph.createNodeWithModel("diamond", "diamond");
