@@ -420,64 +420,72 @@ define(["exports", "data", "glMatrix"], function (data, exports) {
     if (n == null) {
       console.log("Error: Parameter normal n is null.");
     }
-    //https://stackoverflow.com/questions/47181245/how-can-i-calculate-normals-of-closed-shape-in-three-js
+
     // Two edge-vectors dim 3:
 
     // BEGIN exercise Z-Buffer
     // BEGIN exercise Vertex-Normals
 
     // Check for polygon vertex exist (common index error in data).
-
+		// TODO 
     // We do not use the matrix lib here.
-		console.log(polygon)
+
     // Calculate normal vector from vector product of edges.
     let dotProduct;
     let edgeA = [];
     let edgeB = [];
 
-    for (let i = 0; i < polygon.length; i++) {
-      // Calculate first edge from vertices given.
-      edgeA[0] = vertices[i][0] - vertices[i + 1][0];
-      edgeA[1] = vertices[i][1] - vertices[i + 1][1];
-      edgeA[2] = vertices[i][2] - vertices[i + 1][2];
+    // Calculate first edge from vertices given.
+    edgeA[0] = vertices[0][0] - vertices[0 + 1][0];
+    edgeA[1] = vertices[0][1] - vertices[0 + 1][1];
+    edgeA[2] = vertices[0][2] - vertices[0 + 1][2];
+    // Calculate second edge from vertices given.
+    edgeB[0] = vertices[0 + 1][0] - vertices[0 + 2][0];
+    edgeB[1] = vertices[0 + 1][1] - vertices[0 + 2][1];
+    edgeB[2] = vertices[0 + 1][2] - vertices[0 + 2][2];
 
+    console.log(edgeA, edgeB);
+    // Check that e[u] are not parallel.
+    let diffEdgesA = edgeB[0] - edgeA[0];
+    let diffEdgesB = edgeB[1] - edgeA[1];
+    let diffEdgesC = edgeB[2] - edgeA[2];
+
+    let edgesAreParallel =
+      new Set([diffEdgesA, diffEdgesB, diffEdgesC]).size === 1;
+
+    if (edgesAreParallel) {
+      return;
+    }
+		
+		// Calculate normal from cross product of edge A and edge B
+		n = calcCrossProduct(edgeA, edgeB);
+		
+    // Normal exist, otherwise try next edges.
+    dotProduct = calcDotProduct(n, edgeA);
+    if (dotProduct != 0) {
+      edgeA[0] = vertices[0 + 1][0] - vertices[0 + 2][0];
+      edgeA[1] = vertices[0 + 1][1] - vertices[0 + 2][1];
+      edgeA[2] = vertices[0 + 1][2] - vertices[0 + 2][2];
       // Calculate second edge from vertices given.
-      edgeB[0] = vertices[i + 2][0] - vertices[i + 3][0];
-      edgeB[1] = vertices[i + 2][1] - vertices[i + 3][1];
-      edgeB[2] = vertices[i + 2][2] - vertices[i + 3][2];
+      edgeB[0] = vertices[0 + 3][0] - vertices[0 + 4][0];
+      edgeB[1] = vertices[0 + 3][1] - vertices[0 + 4][1];
+      edgeB[2] = vertices[0 + 3][2] - vertices[0 + 4][2];
+    }
 
-			// Check that e[u] are not parallel.
-			let diffEdgesA = edgeB[0] - edgeA[0];
-			let diffEdgesB = edgeB[1] - edgeA[1];
-			let diffEdgesC = edgeB[2] - edgeA[2];
-			
-			let edgesAreParallel= new Set([diffEdgesA,diffEdgesB,diffEdgesC]).size === 1;
-			if (edgesAreParallel) {
-				continue;
-			}
-
-      n = calcCrossProduct(edgeA, edgeB);
-      // Normal exist, otherwise try next edges.
-      dotProduct = calcDotProduct(n, edgeA);
-      if (dotProduct != 0) {
-        continue;
-      }
-
-			
- 
     // Set null-vector (alternative: positive z-direction) as default.
 
     // Normalize n, ignoring w.
-    // We do this by hand as the length is already calculated.
-		let nNorm = n[0] * n [0] + n[1] * n[1] + n[2] * n[2];
-		nNorm = 1/Math.sqrt(nNorm)
+		// We do this by hand as the length is already calculated.
+		// TODO
+    // let nNorm = n[0] * n [0] + n[1] * n[1] + n[2] * n[2];
+    // nNorm = 1/Math.sqrt(nNorm)
 
     // Only  for template, comment this out for solution.
-		// return n;
+    // return n;
 
-		// RESULT: Push normal to normalsForPolygons
-	}
-    // END exercise Vertex-Normals
+    polygonNormals.push(n);
+
+		// END exercise Vertex-Normals
     // END exercise Z-Buffer
   }
 
