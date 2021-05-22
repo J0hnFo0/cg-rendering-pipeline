@@ -190,7 +190,16 @@ define(["exports", "shader", "framebuffer", "data", "glMatrix"], function (
           y = y + dYSign;
           e = e + dXdYdiff2;
 
-          addIntersection(x, y);
+          addIntersection(
+            x,
+            y,
+            z,
+            1,
+            edgeStartVertexIndex,
+            edgeEndVertexIndex,
+            edgeStartTextureCoord,
+            edgeEndTextureCoord
+          );
         }
 
         framebuffer.set(x, y, getZ(x, y), color);
@@ -210,7 +219,16 @@ define(["exports", "shader", "framebuffer", "data", "glMatrix"], function (
           e = e + dYdXdiff2;
         }
 
-        addIntersection(x, y);
+        addIntersection(
+          x,
+          y,
+          z,
+          1,
+          edgeStartVertexIndex,
+          edgeEndVertexIndex,
+          edgeStartTextureCoord,
+          edgeEndTextureCoord
+        );
         framebuffer.set(x, y, getZ(x, y), color);
       }
     }
@@ -264,6 +282,7 @@ define(["exports", "shader", "framebuffer", "data", "glMatrix"], function (
     // to determine z-values of intermediate points.
     // Maybe skip polygons that are perpendicular to the screen / xy-plane.
     // The plane calculation can be commented out if bi-linear interpolation is applied.
+
     if (!calcPlaneEquation(vertices, polygon)) {
       //console.log("Skip plane(polygon) is perpendicular to the screen / xy-plane, color: " + color.name);
       return;
@@ -691,24 +710,30 @@ define(["exports", "shader", "framebuffer", "data", "glMatrix"], function (
     if (Math.abs(C) < epsilon) {
       return false;
     }
+    // 1 Ebenennormale berechnen
+    // 2 z berechnen 
+    // 3 9:41
 
     // START exercise Z-Buffer
 
     // Project first vertex (could be any) on normal.
     // The result is the distance D of polygon plane to origin.
+    let O  = A * vertices[0][0] + B * vertices[1][1] + C * vertices[2][2] + D;
+    //console.log("O", O  )
+    
 
-    // // Check result, applying the plane equation to the original polygon vertices.
-    // for(var i = 0; i < polygon.length; i++) {
-    // var p = polygon[i];
-    // var x = vertices[p][0];
-    // var y = vertices[p][1];
-    // var z = vertices[p][2];
-    // var zCalc = getZ(x, y);
-    // if(Math.abs(z - zCalc) > 0.001) {
-    // // console.log("Check failed  z "+z+" = "+zCalc);
-    // // console.log("Plane: A=" + A + " B=" + B + " C=" + C + " D=" + D);
-    // }
-    // };
+    // Check result, applying the plane equation to the original polygon vertices.
+    for(var i = 0; i < polygon.length; i++) {
+    var p = polygon[i];
+    var x = vertices[p][0];
+    var y = vertices[p][1];
+    var z = vertices[p][2];
+    var zCalc = getZ(x, y);
+    if(Math.abs(z - zCalc) > 0.001) {
+     console.log("Check failed  z "+z+" = "+zCalc);
+     console.log("Plane: A=" + A + " B=" + B + " C=" + C + " D=" + D);
+     }
+    };
 
     // END exercise Z-Buffer
 
