@@ -444,7 +444,6 @@ define(["exports", "data", "glMatrix"], function (data, exports) {
     edgeB[1] = vertices[0 + 1][1] - vertices[0 + 2][1];
     edgeB[2] = vertices[0 + 1][2] - vertices[0 + 2][2];
 
-    console.log(edgeA, edgeB);
     // Check that e[u] are not parallel.
     let diffEdgesA = edgeB[0] - edgeA[0];
     let diffEdgesB = edgeB[1] - edgeA[1];
@@ -481,9 +480,7 @@ define(["exports", "data", "glMatrix"], function (data, exports) {
     // nNorm = 1/Math.sqrt(nNorm)
 
     // Only  for template, comment this out for solution.
-    // return n;
-
-    polygonNormals.push(n);
+    return n;
 
 		// END exercise Vertex-Normals
     // END exercise Z-Buffer

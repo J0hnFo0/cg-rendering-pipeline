@@ -698,9 +698,8 @@ define(["exports", "shader", "framebuffer", "data", "glMatrix"], function (
 
     if (!normal) {
       normal = [];
-      data.calculateNormalForPolygon(vertices, polygon, normal);
+      normal = data.calculateNormalForPolygon(vertices, polygon, normal);
     }
-
     // Assign parameters for plane equation.
     A = normal[0];
     B = normal[1];
@@ -710,17 +709,12 @@ define(["exports", "shader", "framebuffer", "data", "glMatrix"], function (
     if (Math.abs(C) < epsilon) {
       return false;
     }
-    // 1 Ebenennormale berechnen
-    // 2 z berechnen 
-    // 3 9:41
 
     // START exercise Z-Buffer
 
     // Project first vertex (could be any) on normal.
     // The result is the distance D of polygon plane to origin.
-    let O  = A * vertices[0][0] + B * vertices[1][1] + C * vertices[2][2] + D;
-    //console.log("O", O  )
-    
+    D = normal[0] * vertices[0][0] + normal[1] * vertices[0][1] + normal[2] * vertices[0][2];
 
     // Check result, applying the plane equation to the original polygon vertices.
     for(var i = 0; i < polygon.length; i++) {
