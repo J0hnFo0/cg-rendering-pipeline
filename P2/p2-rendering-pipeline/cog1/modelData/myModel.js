@@ -91,11 +91,34 @@ define(["exports", "data"], function (exports, data) {
       [-4, 4, 2], // 35
 
       // #10 Roof top
-      [-4, 2, 0], // 36
-      [-4, 2, 0], // 37
-      [4, 2, 2], // 38
-      [4, 2, 2], // 39
+      [-4, 4, 2], // 36
+      [-4, 4, 6], // 37
+      [4, 4, 6], // 38
+      [4, 4, 2], // 39
 
+      // #11 Tower right
+      [4, 4, 3], // 40
+      [2, 4, 3], // 41
+      [2, 6, 3], // 42
+      [4, 6, 3], // 43
+
+      // #12 Tower left
+      [4, 4, 5], // 44
+      [2, 4, 5], //45
+      [2, 6, 5], //46
+      [4, 6, 5], // 47
+
+      // #13 Tower back
+      [2, 4, 3], // 48
+      [2, 4, 5], // 49
+      [2, 6, 5], // 50
+      [2, 6, 3], // 51
+
+      // #14 Tower front
+      [4, 4, 3], // 52
+      [4, 4, 5], // 53
+      [4, 6, 5], // 54
+      [4, 6, 3], // 55
     ];
 
     instance.polygonVertices = [
@@ -109,8 +132,13 @@ define(["exports", "data"], function (exports, data) {
       [20, 21, 22, 23], // #6 Roof back
       [24, 25, 26, 27], // #7 Roof front
       [28, 29, 30, 31], // #8 Roof left
-      [32, 33, 34 , 35], // #9 Roof right
+      [32, 33, 34, 35], // #9 Roof right
       [36, 37, 38, 39], // #10 Toof top
+
+      [40, 41, 42, 43], // #11 Tower right
+      [44, 45, 46, 47], // #12 Tower left
+      [48, 49, 50, 51], // #13 Tower back
+      [52, 53, 54, 55], // #14 Tower front
     ];
 
     /*     // x, y, z
@@ -154,7 +182,7 @@ define(["exports", "data"], function (exports, data) {
       [18, 19] // Door inner
     ]; */
 
-    instance.polygonColors = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+    instance.polygonColors = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4];
 
     data.applyScale.call(instance, scale);
 
