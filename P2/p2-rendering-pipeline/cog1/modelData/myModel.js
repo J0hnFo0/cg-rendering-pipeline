@@ -119,6 +119,26 @@ define(["exports", "data"], function (exports, data) {
       [4, 4, 5], // 53
       [4, 6, 5], // 54
       [4, 6, 3], // 55
+
+      // #15 Tower roof right
+      [4, 6, 3], // 56
+      [2, 6, 3], // 57
+      [3, 8, 4], // 58
+
+      // #16 Tower roof left
+      [4, 6, 5], // 59
+      [2, 6, 5], // 60
+      [3, 8, 4], // 61
+
+      // #17 Tower roof back
+      [2, 6, 3], // 62
+      [2, 6, 5], // 63
+      [3, 8, 4], // 64
+
+      // #18 Tower roof front
+      [4, 6, 3], // 65
+      [4, 6, 5], // 66
+      [3, 8, 4], // 67
     ];
 
     instance.polygonVertices = [
@@ -139,6 +159,11 @@ define(["exports", "data"], function (exports, data) {
       [44, 45, 46, 47], // #12 Tower left
       [48, 49, 50, 51], // #13 Tower back
       [52, 53, 54, 55], // #14 Tower front
+
+      [56, 57, 58], // #15 Tower roof right
+      [59, 60, 61], // #16 Tower roof left
+      [62, 63, 64], // #17 Tower roof back
+      [65, 66, 67], // #18 Tower roof front
     ];
 
     /*     // x, y, z
@@ -182,7 +207,7 @@ define(["exports", "data"], function (exports, data) {
       [18, 19] // Door inner
     ]; */
 
-    instance.polygonColors = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4];
+    instance.polygonColors = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5, 6, 7, 8];
 
     data.applyScale.call(instance, scale);
 
