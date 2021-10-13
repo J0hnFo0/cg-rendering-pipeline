@@ -171,7 +171,7 @@ define(["exports", "shader", "framebuffer", "data", "glMatrix"], function (
     // return;
 
     // Skip it, if the line is just a point.
-    if (dXAbs == 0 && dYAbs == 0) {
+    if (dX == 0 && dY == 0) {
       return;
     }
 
@@ -181,38 +181,42 @@ define(["exports", "shader", "framebuffer", "data", "glMatrix"], function (
     // this should happen later in the scanline function.
 
     // Distinction of cases for driving variable.
-    // x is driving variable.
     if (dXAbs >= dYAbs) {
       e = dXAbs - dYAbs2;
-      // Iterate until last x value is reached.
-      while (x != endX) {
-        // Adjust x value.
+      while (true) {
+        // ignore start point and end point
+
+        if (x == endX) {
+          break;
+        }
+        // Do not add intersections for points on horizontal line
+
+        framebuffer.set(x, y, getZ(x, y), color);
+
         x = x + dXSign;
+
         if (e > 0) {
           e = e - dYAbs2;
         } else {
-          // Adjust y value.
           y = y + dYSign;
           e = e + dXdYdiff2;
         }
-        framebuffer.set(x, y, getZ(x, y), color);
       }
-    // y is driving variable.
     } else {
       e = dYAbs - dXAbs2;
-      // Iterate until last y value is reached.
-      while (y != endY) {
-        // Adjust y value.
-        y = y + dYSign;
-        if (e > 0) {
-          e = e - dXAbs2;
-        } else {
-          // Adjust x value.
-          x = x + dXSign;
-          e = e + dYdXdiff2;
+      while (true) {
+        if (y == endY) {
+          break;
         }
 
         framebuffer.set(x, y, getZ(x, y), color);
+        y = y + dYSign;
+        if (e > 0) {
+          e = e - 2 * dXAbs;
+        } else {
+          x = x + dXSign;
+          e = e + dYdXdiff2;
+        }
       }
     }
     // END exercise Bresenham
