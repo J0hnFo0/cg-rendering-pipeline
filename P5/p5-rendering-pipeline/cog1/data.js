@@ -446,8 +446,6 @@ define(["exports", "data", "glMatrix"], function (data, exports) {
 			v2y = v2[1] - v0y,
 			v2z = v2[2] - v0z;
 
-
-
 		// We do not use the matrix lib here.
 
 		// Calculate normal vector from vector product of edges.
@@ -465,7 +463,6 @@ define(["exports", "data", "glMatrix"], function (data, exports) {
 			return [0, 0, 0];
 		}
 
-
 		// Normal exist, otherwise try next edges.
 
 		// Set null-vector (alternative: positive z-direction) as default.
@@ -480,8 +477,6 @@ define(["exports", "data", "glMatrix"], function (data, exports) {
 		n[1] = n[1] * norm;
 
 		n[2] = n[2] * norm;
-
-
 
 		// Only  for template, comment this out for solution.
 		return n;
