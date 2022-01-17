@@ -11,12 +11,12 @@ function(exports, dojo, domStyle, app, scenegraph, createScene, animation, raste
 	// Variables with initialization parameters.
 	//
 	// Fill or stroke polygon.
-	var fill = false;
+	var fill = true;
 	// Display normals for debug.
 	var displayNormals = false;
 	var defaultNormalLength = 50;
 	// Display edges together with normals as default.
-	var displayEdges = false;
+	var displayEdges = true;
 	// Color for normals and edges, set in init.
 	var lineColor3DName = "black";
 	var lineColor3D;
@@ -38,7 +38,7 @@ function(exports, dojo, domStyle, app, scenegraph, createScene, animation, raste
 	// Set when triangulation is toggled.
 	var dataIsTriangulated = triangulateDataOnInit;
 	// Use textures defined in model data.
-	var texturing = false;
+	var texturing = true;
 
 	// Font for info on canvas (not in GUI) .
 	var fontsizeInPt = 10;
@@ -101,7 +101,7 @@ function(exports, dojo, domStyle, app, scenegraph, createScene, animation, raste
 		createScene.init();
 
 		// Avoid an interactive node that is not visible.
-		scenegraph.setInteractiveNodeToFirstVisibleNode();		
+		scenegraph.setInteractiveNodeToFirstVisibleNode();
 	}
 
 	/**
@@ -158,7 +158,7 @@ function(exports, dojo, domStyle, app, scenegraph, createScene, animation, raste
 	 * As a result all vertices inside the frustum
 	 * should be in a -1,+1 cube (clip coordinates).
 	 * Default is an orthogonal-projection without scaling (z-value will be ignored).
-	 * 
+	 *
 	 * @parameter mat is a custom mat4 matrix.
 	 */
 	function setProjection(matrix) {
@@ -177,7 +177,7 @@ function(exports, dojo, domStyle, app, scenegraph, createScene, animation, raste
             // Far clipping plane.
             // Be as deep as wide.
             var f = r;
-            
+
             switch(projectionType){
                 case "ortho": {
                     // Set frustum to +- size of the canvas.
@@ -193,7 +193,7 @@ function(exports, dojo, domStyle, app, scenegraph, createScene, animation, raste
                     // We do not clip at the near or far plane,
                     // thus we leave out scaling the z-coordinate.
                     //projection[10] = //-2/f-n;
-                    //projection[11] = -(f+n)/(f-n);                    
+                    //projection[11] = -(f+n)/(f-n);
                     break;
                 }
                 case "frustum": {
@@ -210,7 +210,7 @@ function(exports, dojo, domStyle, app, scenegraph, createScene, animation, raste
                 default:{
                     console.error("Unknown projection type.");
                 }
-            }	    
+            }
 		}
 	}
 
@@ -247,7 +247,7 @@ function(exports, dojo, domStyle, app, scenegraph, createScene, animation, raste
 	 * Run the complete rendering pipeline for all nodes.
 	 */
 	function render() {
-				
+
 		if(upToDate) {
 			return true;
 		}
@@ -287,18 +287,18 @@ function(exports, dojo, domStyle, app, scenegraph, createScene, animation, raste
 				continue;
 			}
 			//console.log("nodes[" + i + "] is ready");
-			
+
 			// Render the node.
 			// Perform modelview, projection and viewport transformations in 3D.
 			var worldModelview = nodes[i].updateModelview();
 
 			// Store matrices for interactive node for debug.
 			if(scenegraph.isInteractiveNode(i)){
-				foundInteractiveNode = true;	
+				foundInteractiveNode = true;
 				if(displayMatrices) {
 					var interactiveNodeLocalModelview = mat4.create(nodes[i].getLocalModelview());
 					var interactiveNodeWorldModelview = mat4.create(worldModelview);
-				}							
+				}
 			}
 
 			// Skip nodes that are not visible.
@@ -331,7 +331,7 @@ function(exports, dojo, domStyle, app, scenegraph, createScene, animation, raste
 		framebuffer.display();
 
 		// The following text of 2D images are displayed on top of the scene.
-		
+
 		// Show location if light in 2D, if shader users it.
 		// Draw on top of models.
 		if(shader.usesLightLocation()) {//&& ! scenegraph.getPointLightNode()) {
@@ -381,7 +381,7 @@ function(exports, dojo, domStyle, app, scenegraph, createScene, animation, raste
 
 		// Loop over polygons in model.
 		for(var p = 0; p < polygons.length; p++) {
-	
+
 			// Prepare the data of polygon p to pass to scanline.
 			var polygon = polygons[p];
 			var normal = polygonNormals[p];
@@ -399,14 +399,9 @@ function(exports, dojo, domStyle, app, scenegraph, createScene, animation, raste
 
 			// Back-face culling.
 			// Check if polygon is facing away from the camera (in negative z-direction).
-			if (backfaceCulling)
-			{
-				if (normal[2] <= 0)
-					continue;
-			}
 
 			// END exercise Back-Face Culling
-						
+
 			// Register the current polygon with the shader.
 			shader.setPolygon(p);
 
@@ -423,6 +418,8 @@ function(exports, dojo, domStyle, app, scenegraph, createScene, animation, raste
 			if(displayEdges) {
 				raster.scanlineStrokePolygon(vertices, polygon, lineColor3D);
 			}
+
+			polycount++;
 		}
 	}
 
@@ -453,11 +450,6 @@ function(exports, dojo, domStyle, app, scenegraph, createScene, animation, raste
 
 			// Back-face culling.
 			// Check if polygon is facing away from the camera (in negative z-direction).
-			if (backfaceCulling)
-			{
-				if (normal[2] <= 0)
-					continue;
-			}
 
 			// END exercise Back-Face Culling
 
@@ -625,7 +617,7 @@ function(exports, dojo, domStyle, app, scenegraph, createScene, animation, raste
 		displayVector("scale", node.transformation.scale, ctx.width - 190, 360);
 		displayVector("shear", node.transformation.shear, ctx.width - 190, 390);
 	}
-	
+
 	/**
 	 * Display name texture etc for (interactive) node.
 	 */
@@ -633,12 +625,12 @@ function(exports, dojo, domStyle, app, scenegraph, createScene, animation, raste
 		var str = "interactive node";
 
 		if(!node.isVisible()){
-			str += " is not visible"; 
+			str += " is not visible";
 		}
 		str += ": "+node.name;
 		var texture = scenegraph.getTextureNameForNode(node);
 		if(texture){
-			str += " ("+texture+")";		
+			str += " ("+texture+")";
 		}
 
 		displayText(str, undefined, ctx.height-10, true);
@@ -728,7 +720,7 @@ function(exports, dojo, domStyle, app, scenegraph, createScene, animation, raste
     /**
      * Clear all or part of the canvas,
      * depending on the dirty rect from the framebuffer.
-     * 
+     *
      * @parameter clearAll clears the entire canvas.
      */
     function clearCanvas(clearAll){
@@ -746,11 +738,11 @@ function(exports, dojo, domStyle, app, scenegraph, createScene, animation, raste
             // Clean frame-counter.
             ctx.clearRect(0, 0, 150, 30);
             clearLightLocationMarker();
-        }        
+        }
     }
 
 	/**
-	 * Display a text message on the canvas. 
+	 * Display a text message on the canvas.
 	 */
 	function displayMessage(text, pos) {
 		// Position at top center.
@@ -819,7 +811,7 @@ function(exports, dojo, domStyle, app, scenegraph, createScene, animation, raste
 		displayMatrices = !displayMatrices;
 		if(!displayMatrices) {
             // Clear remains once if disabled.
-            clearCanvas(true);		    
+            clearCanvas(true);
     	}
 		setUpToDate();
 	}
@@ -900,7 +892,7 @@ function(exports, dojo, domStyle, app, scenegraph, createScene, animation, raste
 	function getDisplayMatrices() {
 		return displayMatrices;
 	}
-	
+
 	/**
      * @parameter projectionType can be one in projectionTypes.
      */

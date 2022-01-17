@@ -44,8 +44,8 @@ require(["dojo", "dojo/parser", "dojo/domReady!"], function(dojo) {
 			//"cog1" : "/home/felix/BHT/src/cog1/cog1_JS_template/cog1"
 			// "cog1" : "/cog1_JS_template/cog1"
 			// "cog1" : "/xampp/htdocs/cog1_JS_template/cog1"
-			"cog1" : "/~s85393/cg1/m1-rendering-pipeline/cog1"
-			// "cog1" : "/home/jenserhardt/code/cg-rendering-pipeline/M1/m1-rendering-pipeline/cog1"
+			// "cog1" : "/~s85393/cg1/p6-rendering-pipeline/cog1"
+			"cog1" : "/home/jenserhardt/code/cg-rendering-pipeline/M3/m3-rendering-pipeline/cog1"
 			// On same [maybe local] HTTP-server as used to load dojo:
 			// "cog1" : "/BHT/src/cog1/cog1_JS_template/cog1"
 			// "cog1" : "/~gers/cog1_sol/cog1"

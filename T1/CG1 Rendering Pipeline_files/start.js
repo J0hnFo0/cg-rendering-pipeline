@@ -1,9 +1,9 @@
-/** 
+/**
  * This script is the entry point of the framework, called from index.
  * Project dependent code may go into the index file.
  * Load initial set of dependencies and start rendering.
- * This is the file to set the initial breakpoint when debugging. 
- */ 
+ * This is the file to set the initial breakpoint when debugging.
+ */
 require(["dojo", "dojo/parser", "dojo/domReady!"], function(dojo) {
     "use strict";
 
@@ -42,12 +42,9 @@ require(["dojo", "dojo/parser", "dojo/domReady!"], function(dojo) {
 			// "cog1" : "/Users/felixgers/BHT/src/cog1/cog1_JS_template/cog1"
 			//"cog1" : "/Users/felixgers/BHT/src/cog1/cog1_JS_template/cog1"
 			//"cog1" : "/home/felix/BHT/src/cog1/cog1_JS_template/cog1"
-			// "cog1" : "/cog1_JS_template/cog1"
-			// "cog1" : "/xampp/htdocs/cog1_JS_template/cog1"
-			"cog1" : "/~s85393/cg1/m1-rendering-pipeline/cog1"
-			// "cog1" : "/home/jenserhardt/code/cg-rendering-pipeline/M1/m1-rendering-pipeline/cog1"
+			// "cog1" : "file:///U:/BHT/src/cog1/cog1_JS_template"
 			// On same [maybe local] HTTP-server as used to load dojo:
-			// "cog1" : "/BHT/src/cog1/cog1_JS_template/cog1"
+			"cog1" : `${window.location.href}/../cog1`
 			// "cog1" : "/~gers/cog1_sol/cog1"
 		},
 		// Add one entry for each custom module.
